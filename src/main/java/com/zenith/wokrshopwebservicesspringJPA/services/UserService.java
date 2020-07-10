@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zenith.wokrshopwebservicesspringJPA.entities.User;
 import com.zenith.wokrshopwebservicesspringJPA.repositories.UserRepository;
+import com.zenith.wokrshopwebservicesspringJPA.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
